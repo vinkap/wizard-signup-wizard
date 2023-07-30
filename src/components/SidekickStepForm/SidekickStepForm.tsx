@@ -1,18 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import './SidekickStepForm.css'
 
 import { Sidekick, User } from '../../models/interfaces';
-import SubmitButton from '../SubmitButton/SubmitButton';
-
 
 type Prop = {
   userData: User | undefined;
   onPrevious: (user: User) => void;
   onComplete: (user: User) => void;
+  submitBtn: (disabled: boolean, label: string) => ReactNode;
 }
 
-export default function SidekickStepForm({ userData, onPrevious, onComplete }: Prop) {
+export default function SidekickStepForm({ userData, onPrevious, submitBtn, onComplete }: Prop) {
   const { register, handleSubmit, setFocus, formState: { errors, isSubmitting } } = useForm<Sidekick>();
 
   useEffect(() => {
@@ -56,8 +55,8 @@ export default function SidekickStepForm({ userData, onPrevious, onComplete }: P
           {errors?.skill &&
             <span role="alert" className="field-errors">{errors?.skill?.message}</span>}
         </p>
-        <button onClick={() => onPrevious(userData!)}>Prev</button>
-        <SubmitButton disabled={isSubmitting}/>
+        {/* <button onClick={() => onPrevious(userData!)}>Prev</button> */}
+        {submitBtn(isSubmitting, 'Finish')}
       </form>
       <br />
     </>

@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import './UserStepForm.css'
 import { User } from '../../models/interfaces';
-import SubmitButton from '../SubmitButton/SubmitButton';
 
 type Prop = {
   onComplete: (user: User) => void;
+  submitBtn: (disabled: boolean, label: string) => ReactNode;
 }
 
-export default function UserStepForm({ onComplete }: Prop) {
+export default function UserStepForm({ submitBtn, onComplete }: Prop) {
   const { register, handleSubmit, getValues, setFocus, formState: { errors, isSubmitting } } = useForm<User>();
 
   useEffect(() => {
@@ -96,8 +96,7 @@ export default function UserStepForm({ onComplete }: Prop) {
           <label htmlFor="terms">Newsletter</label>
           <input type="checkbox" id="newsletter" {...register("newsletter")} /> I would like to receive email udates
         </p>
-        {/* <button type='submit' disabled={isSubmitting}>Save</button> */}
-        <SubmitButton disabled={isSubmitting}/>
+        {submitBtn(isSubmitting, 'Get Started')}
       </form>
       <br />
     </>

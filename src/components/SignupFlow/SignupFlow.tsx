@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import './SignupFlow.css';
 
 import UserStepForm from '../UserStepForm/UserStepForm';
@@ -14,14 +14,16 @@ export default function SignupFlow() {
 
     const getStepForm = () => {
         switch (currentStep) {
-            case 0: return <UserStepForm onComplete={onComplete} />;
-            case 1: return <WizardStepForm userData={userData} onPrevious={onPrevious} onComplete={onComplete} />;
-            case 2: return <SidekickStepForm userData={userData} onPrevious={onPrevious} onComplete={onComplete} />;
-            case 3: return <ConfirmationStep userData={userData!} onPrevious={onPrevious} onComplete={onComplete} />;
+            case 0: return <UserStepForm submitBtn={submitBtn} onComplete={onComplete} />;
+            case 1: return <WizardStepForm submitBtn={submitBtn} onPrevious={onPrevious} onComplete={onComplete} userData={userData} />;
+            case 2: return <SidekickStepForm submitBtn={submitBtn} onPrevious={onPrevious} onComplete={onComplete} userData={userData} />;
+            case 3: return <ConfirmationStep submitBtn={submitBtn} onPrevious={onPrevious} onComplete={onComplete} userData={userData!} />;
             default:
                 setCurrentStep(0);
         }
     };
+
+    const submitBtn = (disabled: boolean, label: string = 'Next') => <button type='submit' disabled={disabled}>{disabled ? "Saving..." : label}</button>;
 
     const onComplete = (data: User, done?: boolean) => {
         if (!!done) {
@@ -42,7 +44,6 @@ export default function SignupFlow() {
     useEffect(() => {
       console.dir(userData);
     }, [userData]);
-    
 
     return (
         <div>

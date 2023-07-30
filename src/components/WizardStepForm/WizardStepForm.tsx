@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import './WizardStepForm.css'
 
 import { User, Wizard } from '../../models/interfaces';
 import { WIZARD_SCHOOLS } from '../../models/constants';
 import { Alignment } from '../../models/enums';
-import SubmitButton from '../SubmitButton/SubmitButton';
 
 type Prop = {
   userData: User | undefined;
   onPrevious: (user: User) => void;
   onComplete: (user: User) => void;
+  submitBtn: (disabled: boolean) => ReactNode;
 }
 
-export default function WizardStepForm({ userData, onPrevious, onComplete }: Prop) {
+export default function WizardStepForm({ userData, onPrevious, submitBtn, onComplete }: Prop) {
   const { register, handleSubmit, setFocus, formState: { errors, isSubmitting } } = useForm<Wizard>();
 
   useEffect(() => {
@@ -92,8 +92,8 @@ export default function WizardStepForm({ userData, onPrevious, onComplete }: Pro
           {errors?.alignment &&
             <span role="alert" className="field-errors">{errors?.alignment?.message}</span>}
         </p>
-        <button onClick={() => onPrevious(userData!)}>Prev</button>
-        <SubmitButton disabled={isSubmitting}/>
+        {/* <button onClick={() => onPrevious(userData!)}>Prev</button> */}
+        {submitBtn(isSubmitting)}
       </form>
       <br />
     </>
