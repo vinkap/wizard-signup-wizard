@@ -1,0 +1,21 @@
+.title {
+    text-align: left;
+}
+
+.steps {
+    border: 2px dotted;
+    padding: 5px;
+}
+
+.form {
+    text-align: left;
+}
+
+label {
+    margin-right: 5px;
+}
+
+.field-errors {
+    margin-left: 5px;
+    color: red;
+}
