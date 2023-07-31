@@ -71,7 +71,7 @@ export default function WizardStepForm({ userData, onPrevious, submitBtn, onComp
             )}
           >
             <option defaultValue={-1}>-- Select One --</option>
-            {WIZARD_SCHOOLS.map(school => <option value={school}>{school}</option>)}
+            {WIZARD_SCHOOLS.map(school => <option key={school} value={school}>{school}</option>)}
           </select>
           {errors?.school &&
             <span role="alert" className="field-errors">{errors?.school?.message}</span>}
