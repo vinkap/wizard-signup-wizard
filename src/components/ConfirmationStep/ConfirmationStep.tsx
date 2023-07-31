@@ -11,7 +11,9 @@ type Props = {
 }
 
 export default function ConfirmationStep({ userData, onPrevious, submitBtn, onComplete }: Props) {
-  const { handleSubmit, formState: { isSubmitting } } = useForm<User>();
+  const { handleSubmit, 
+          formState: { isSubmitting } 
+        } = useForm<User>();
 
   const onSubmit = handleSubmit((data) => new Promise<void>(resolve => setTimeout(() => {
     // console.dir(data);
@@ -37,7 +39,7 @@ export default function ConfirmationStep({ userData, onPrevious, submitBtn, onCo
         <p>Name: {userData?.sidekick?.name}</p>
         <p>Skill: {userData?.sidekick?.skill}</p>
 
-        {/* <button onClick={() => onPrevious(userData!)}>Prev</button> */}
+        <button onClick={() => onPrevious(userData!)}>Prev</button>
         {submitBtn(isSubmitting, 'Confirm and Sign up!')}
       </form>
       <br />

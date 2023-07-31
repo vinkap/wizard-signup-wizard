@@ -14,7 +14,7 @@ export default function SignupFlow() {
 
     const getStepForm = () => {
         switch (currentStep) {
-            case 0: return <UserStepForm submitBtn={submitBtn} onComplete={onComplete} />;
+            case 0: return <UserStepForm submitBtn={submitBtn} onComplete={onComplete} userData={userData} />;
             case 1: return <WizardStepForm submitBtn={submitBtn} onPrevious={onPrevious} onComplete={onComplete} userData={userData} />;
             case 2: return <SidekickStepForm submitBtn={submitBtn} onPrevious={onPrevious} onComplete={onComplete} userData={userData} />;
             case 3: return <ConfirmationStep submitBtn={submitBtn} onPrevious={onPrevious} onComplete={onComplete} userData={userData!} />;

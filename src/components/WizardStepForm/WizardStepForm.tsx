@@ -14,7 +14,18 @@ type Prop = {
 }
 
 export default function WizardStepForm({ userData, onPrevious, submitBtn, onComplete }: Prop) {
-  const { register, handleSubmit, setFocus, formState: { errors, isSubmitting } } = useForm<Wizard>();
+  const { register, 
+          handleSubmit, 
+          setFocus, 
+          formState: { errors, isSubmitting } 
+        } = useForm<Wizard>({
+                              defaultValues: {
+                                                name: userData?.wizard?.name,
+                                                level: userData?.wizard?.level, 
+                                                school: userData?.wizard?.school,
+                                                alignment: userData?.wizard?.alignment,
+                                              }
+                            });
 
   useEffect(() => {
     setFocus("name");
@@ -92,7 +103,7 @@ export default function WizardStepForm({ userData, onPrevious, submitBtn, onComp
           {errors?.alignment &&
             <span role="alert" className="field-errors">{errors?.alignment?.message}</span>}
         </p>
-        {/* <button onClick={() => onPrevious(userData!)}>Prev</button> */}
+        <button onClick={() => onPrevious(userData!)}>Prev</button>
         {submitBtn(isSubmitting)}
       </form>
       <br />

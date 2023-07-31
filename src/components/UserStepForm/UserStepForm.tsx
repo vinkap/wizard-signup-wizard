@@ -4,12 +4,26 @@ import './UserStepForm.css'
 import { User } from '../../models/interfaces';
 
 type Prop = {
+  userData: User | undefined;
   onComplete: (user: User) => void;
   submitBtn: (disabled: boolean, label: string) => ReactNode;
 }
 
-export default function UserStepForm({ submitBtn, onComplete }: Prop) {
-  const { register, handleSubmit, getValues, setFocus, formState: { errors, isSubmitting } } = useForm<User>();
+export default function UserStepForm({ userData, onComplete, submitBtn }: Prop) {
+  const { register,
+          handleSubmit,
+          getValues,
+          setFocus,
+          formState: { errors, isSubmitting }
+        } = useForm<User>({
+                            defaultValues: {
+                                              email: userData?.email,
+                                              password: userData?.password, 
+                                              newsletter: userData?.newsletter,
+                                              terms: userData?.terms,
+                                              confirmPassword: userData?.confirmPassword,
+                                            }
+                          });
 
   useEffect(() => {
     setFocus("email");

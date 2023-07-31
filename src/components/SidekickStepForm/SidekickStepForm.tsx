@@ -12,7 +12,16 @@ type Prop = {
 }
 
 export default function SidekickStepForm({ userData, onPrevious, submitBtn, onComplete }: Prop) {
-  const { register, handleSubmit, setFocus, formState: { errors, isSubmitting } } = useForm<Sidekick>();
+  const { register, 
+          handleSubmit, 
+          setFocus, 
+          formState: { errors, isSubmitting } 
+        } = useForm<Sidekick>({
+                                defaultValues: {
+                                                  name: userData?.sidekick?.name,
+                                                  skill: userData?.sidekick?.skill, 
+                                                }
+                              });
 
   useEffect(() => {
     setFocus("name");
@@ -55,7 +64,7 @@ export default function SidekickStepForm({ userData, onPrevious, submitBtn, onCo
           {errors?.skill &&
             <span role="alert" className="field-errors">{errors?.skill?.message}</span>}
         </p>
-        {/* <button onClick={() => onPrevious(userData!)}>Prev</button> */}
+        <button onClick={() => onPrevious(userData!)}>Prev</button>
         {submitBtn(isSubmitting, 'Finish')}
       </form>
       <br />
