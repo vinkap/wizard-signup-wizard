@@ -26,6 +26,7 @@ export default function SignupFlow() {
     const submitBtn = (disabled: boolean, label: string = 'Next') => <button type='submit' disabled={disabled}>{disabled ? "Saving..." : label}</button>;
 
     const onComplete = (data: User, done?: boolean) => {
+        console.log('oncomplete')
         if (!!done) {
             setUserData(undefined); // Clear current data
             setCurrentStep(0); // Reset the flow

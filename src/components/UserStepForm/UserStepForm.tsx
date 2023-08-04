@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import './UserStepForm.css'
 import { User } from '../../models/interfaces';
+import useCustomDelay from '../../hooks/customDelay';
 
 type Prop = {
   userData: User | undefined;
@@ -11,20 +12,20 @@ type Prop = {
 
 export default function UserStepForm({ userData, onComplete, submitBtn }: Prop) {
   const { register,
-          handleSubmit,
-          getValues,
-          setFocus,
-          formState: { errors, isSubmitting }
-        } = useForm<User>({
-                            defaultValues: {
-                                              email: userData?.email,
-                                              password: userData?.password, 
-                                              newsletter: userData?.newsletter,
-                                              terms: userData?.terms,
-                                              confirmPassword: userData?.confirmPassword,
-                                            }
-                          });
-
+    handleSubmit,
+    getValues,
+    setFocus,
+    formState: { errors, isSubmitting }
+  } = useForm<User>({
+    defaultValues: {
+      email: userData?.email,
+      password: userData?.password,
+      newsletter: userData?.newsletter,
+      terms: userData?.terms,
+      confirmPassword: userData?.confirmPassword,
+    }
+  });
+  const { callBackAfterDelay } = useCustomDelay();
   useEffect(() => {
     setFocus("email");
   }, [])
@@ -33,11 +34,16 @@ export default function UserStepForm({ userData, onComplete, submitBtn }: Prop) 
   //   console.log(errors);
   // }, [errors])
 
-  const onSubmit = handleSubmit((data) => new Promise<void>(resolve => setTimeout(() => {
-    // console.dir(data);
-    onComplete(data);
-    resolve();
-  }, 2000)));
+  // const onSubmit = handleSubmit((data) => new Promise<void>(resolve => setTimeout(() => {
+  //   // console.dir(data);
+  //   onComplete(data);
+  //   resolve();
+  // }, 2000)));
+
+
+  const onSubmit = handleSubmit(async (data) => {
+    await callBackAfterDelay(() => onComplete);
+  })
 
   return (
     <>

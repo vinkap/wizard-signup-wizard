@@ -1,19 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 // Couldn't get this to work!!!
 
-export default function useCustomDelay(callback: Function, delay: number) {
-    const callbackRef = useRef(callback);
-
-    useEffect(() => {
-      callbackRef.current = callback;
-    }, [callback]);
-  
-    useEffect(() => {
-      const timerId = setTimeout(() => {
-        callbackRef.current();
-      }, delay);
-  
-      return () => clearTimeout(timerId);
-    }, [delay]);
+export default function useCustomDelay() {
+  const callBackAfterDelay = (callback: () => void) => {
+    console.log('inside hook');
+    return new Promise<void>((resolve) =>
+      setTimeout(() => {
+        console.log('calling back...');
+        callback();
+        resolve();
+      }, 20000),
+    );
+  };
+  return { callBackAfterDelay };
 }
